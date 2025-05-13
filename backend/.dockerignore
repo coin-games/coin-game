@@ -1,0 +1,16 @@
+.git
+.gradle
+out
+Dockerfile
+
+# Git 관련
+.gitignore
+.gitattributes
+
+# IDE/OS 관련
+.idea/
+*.iml
+.DS_Store
+
+# 빌드 산출물 (Gradle)
+build/
