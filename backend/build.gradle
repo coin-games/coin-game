@@ -40,3 +40,12 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+jar {
+	enabled = false
+}
+
+bootJar {
+	archiveBaseName.set("app")
+	archiveVersion.set("")
+}
