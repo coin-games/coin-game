@@ -1,6 +1,6 @@
 package com.cgs.backend.service.user;
 
-import com.cgs.backend.dto.UserSignUpRequest;
+import com.cgs.backend.dto.user.UserSignUpRequest;
 import com.cgs.backend.entity.User;
 import com.cgs.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
