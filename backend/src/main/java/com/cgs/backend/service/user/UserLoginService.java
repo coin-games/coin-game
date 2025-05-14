@@ -1,5 +1,7 @@
 package com.cgs.backend.service.user;
 
+import com.cgs.backend.common.exception.UserException;
+import com.cgs.backend.common.response.ResponseCode;
 import com.cgs.backend.dto.user.TokenResponse;
 import com.cgs.backend.dto.user.UserLoginRequest;
 import com.cgs.backend.entity.User;
@@ -20,10 +22,10 @@ public class UserLoginService {
 
     public TokenResponse login(UserLoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 이메일입니다."));
+                .orElseThrow(() -> new UserException(ResponseCode.USER_NOT_FOUND));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new UserException(ResponseCode.INVALID_PASSWORD);
         }
 
         String accessToken = jwtProvider.createAccessToken(user);

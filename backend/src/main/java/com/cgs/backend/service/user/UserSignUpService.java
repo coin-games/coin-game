@@ -1,5 +1,7 @@
 package com.cgs.backend.service.user;
 
+import com.cgs.backend.common.exception.UserException;
+import com.cgs.backend.common.response.ResponseCode;
 import com.cgs.backend.dto.user.UserSignUpRequest;
 import com.cgs.backend.entity.User;
 import com.cgs.backend.repository.UserRepository;
@@ -28,7 +30,7 @@ public class UserSignUpService {
 
     private void validateDuplicateEmail(String email) {
         if (userRepository.findByEmail(email).isPresent()) {
-            throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
+            throw new UserException(ResponseCode.USER_EMAIL_ALREADY_EXIST);
         }
     }
 
