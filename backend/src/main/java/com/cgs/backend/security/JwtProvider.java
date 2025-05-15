@@ -48,12 +48,10 @@ public class JwtProvider {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
-
     //Jwt에서 userId 추출
     public String getUserId(String token) {
         return parseClaims(token).getBody().getSubject();
     }
-
     //Jwt 유효성 검증
     public boolean validateToken(String token) {
         try {
@@ -64,11 +62,14 @@ public class JwtProvider {
         }
     }
 
-
     private Jws<Claims> parseClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token);
+    }
+
+    public long getRefreshTokenExpiration() {
+        return refreshTokenExpiration;
     }
 }
