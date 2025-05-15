@@ -15,8 +15,14 @@ public enum ResponseCode {
     // 401 Unauthorized
     USER_NOT_FOUND(HttpStatus.UNAUTHORIZED, "존재하지 않는 이메일입니다."),
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다."),
-    INVALID_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED, "Access Token이 유효하지 않습니다."),
-    INVALID_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "Refresh Token이 유효하지 않습니다."),
+    REFRESH_TOKEN_MISMATCH(HttpStatus.UNAUTHORIZED, "저장된 Refresh Token과 일치하지 않습니다."),
+    EXPIRED_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "Refresh Token이 만료되었습니다."),
+    INVALID_REFRESH_TOKEN_SIGNATURE(HttpStatus.UNAUTHORIZED, "Refresh Token의 서명이 올바르지 않습니다."),
+    MALFORMED_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "Refresh Token의 형식이 올바르지 않습니다."),
+    ACCESS_TOKEN_MISSING(HttpStatus.UNAUTHORIZED, "Access Token이 제공되지 않았습니다."),
+    EXPIRED_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED, "Access Token이 만료되었습니다."),
+    INVALID_ACCESS_TOKEN_SIGNATURE(HttpStatus.UNAUTHORIZED, "Access Token의 서명이 올바르지 않습니다."),
+    MALFORMED_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED, "Access Token 형식이 잘못되었습니다."),
 
     // 409 Conflict
     USER_EMAIL_ALREADY_EXIST(HttpStatus.CONFLICT, "이미 존재하는 이메일입니다."),

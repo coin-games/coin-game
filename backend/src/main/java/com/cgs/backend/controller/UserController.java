@@ -30,4 +30,9 @@ public class UserController {
     public ResponseEntity<CustomResponse<TokenResponse>> login(@RequestBody @Valid UserLoginRequest request) {
         return ResponseEntity.ok(CustomResponse.success(ResponseCode.USER_LOGIN_SUCCESS, userLoginService.login(request)));
     }
+
+    @GetMapping("/test")
+    public String test() {
+        return "test";
+    }
 }
