@@ -35,6 +35,10 @@ public class JwtProvider {
         return createToken(user.getId(), accessTokenExpiration);
     }
 
+    public String createAccessToken(String userId) {
+        return createToken(userId, accessTokenExpiration);
+    }
+
     public String createRefreshToken(User user) {
         return createToken(user.getId(), refreshTokenExpiration);
     }

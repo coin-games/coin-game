@@ -15,6 +15,8 @@ public enum ResponseCode {
     // 401 Unauthorized
     USER_NOT_FOUND(HttpStatus.UNAUTHORIZED, "존재하지 않는 이메일입니다."),
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다."),
+    INVALID_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED, "Access Token이 유효하지 않습니다."),
+    INVALID_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "Refresh Token이 유효하지 않습니다."),
 
     // 409 Conflict
     USER_EMAIL_ALREADY_EXIST(HttpStatus.CONFLICT, "이미 존재하는 이메일입니다."),
@@ -24,6 +26,7 @@ public enum ResponseCode {
 
     // 200 OK
     USER_LOGIN_SUCCESS(HttpStatus.OK, "로그인에 성공했습니다."),
+    ACCESS_TOKEN_REISSUE_SUCCESS(HttpStatus.OK, "Access Token이 재발급되었습니다."),
 
     // 201 Created
     USER_CREATE_SUCCESS(HttpStatus.CREATED, "회원가입에 성공했습니다.");
