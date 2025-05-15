@@ -16,7 +16,7 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/reissue")
+    @PostMapping("/token")
     public ResponseEntity<CustomResponse<TokenResponse>> reissue(@RequestBody TokenReissueRequest request) {
         return ResponseEntity.ok(CustomResponse.success(ResponseCode.ACCESS_TOKEN_REISSUE_SUCCESS, authService.reissue(request)));
     }
