@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  spring-app:
+    build:
+      context: ./backend
+    container_name: spring-app
+    image: docker1jeong/spring-app:latest
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      - app-network
+
+  vue-app:
+    build:
+      context: ./frontend
+    container_name: vue-app
+    image: docker1jeong/vue-app:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - spring-app
+    restart: always
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
