@@ -1,6 +1,7 @@
 package com.cgs.backend.controller;
 
 import com.cgs.backend.common.response.CustomResponse;
+import com.cgs.backend.common.response.CustomResponseEntity;
 import com.cgs.backend.common.response.ResponseCode;
 import com.cgs.backend.dto.user.TokenResponse;
 import com.cgs.backend.dto.user.UserLoginRequest;
@@ -23,12 +24,12 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<CustomResponse<Void>> signUp(@RequestBody @Valid UserSignUpRequest request) {
         userSignUpService.signUp(request);
-        return ResponseEntity.ok(CustomResponse.success(ResponseCode.USER_CREATE_SUCCESS));
+        return CustomResponseEntity.success(ResponseCode.USER_CREATE_SUCCESS);
     }
 
     @PostMapping("/login")
     public ResponseEntity<CustomResponse<TokenResponse>> login(@RequestBody @Valid UserLoginRequest request) {
-        return ResponseEntity.ok(CustomResponse.success(ResponseCode.USER_LOGIN_SUCCESS, userLoginService.login(request)));
+        return CustomResponseEntity.success(ResponseCode.USER_LOGIN_SUCCESS, userLoginService.login(request));
     }
 
     @GetMapping("/test")
