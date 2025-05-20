@@ -26,7 +26,7 @@ public class User {
 
     @Builder
     public User(String nickname, String email, String password) {
-        this.id = UUID.randomUUID().toString();
+        this.id = "USER_" + UUID.randomUUID().toString().substring(0, 16);
         this.nickname = nickname;
         this.email = email;
         this.password = password;

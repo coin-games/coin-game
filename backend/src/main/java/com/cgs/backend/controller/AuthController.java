@@ -1,6 +1,7 @@
 package com.cgs.backend.controller;
 
 import com.cgs.backend.common.response.CustomResponse;
+import com.cgs.backend.common.response.CustomResponseEntity;
 import com.cgs.backend.common.response.ResponseCode;
 import com.cgs.backend.dto.auth.TokenReissueRequest;
 import com.cgs.backend.dto.user.TokenResponse;
@@ -18,7 +19,7 @@ public class AuthController {
 
     @PostMapping("/token")
     public ResponseEntity<CustomResponse<TokenResponse>> reissue(@RequestBody TokenReissueRequest request) {
-        return ResponseEntity.ok(CustomResponse.success(ResponseCode.ACCESS_TOKEN_REISSUE_SUCCESS, authService.reissue(request)));
+        return CustomResponseEntity.success(ResponseCode.ACCESS_TOKEN_REISSUE_SUCCESS, authService.reissue(request));
     }
 
 }
