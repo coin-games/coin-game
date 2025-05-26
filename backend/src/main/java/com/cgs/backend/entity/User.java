@@ -1,8 +1,6 @@
 package com.cgs.backend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,6 +21,10 @@ public class User {
     private String email;
     private String password;
     private LocalDateTime registeredAt;
+
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private UserRecord userRecord;
 
     @Builder
     public User(String nickname, String email, String password) {
