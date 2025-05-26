@@ -14,6 +14,7 @@ public enum ResponseCode {
 
     // 401 Unauthorized
     USER_NOT_FOUND(HttpStatus.UNAUTHORIZED, "존재하지 않는 이메일입니다."),
+    RECORD_NOT_FOUND(HttpStatus.UNAUTHORIZED, "전적이 존재하지 않습니다."),
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다."),
     REFRESH_TOKEN_MISMATCH(HttpStatus.UNAUTHORIZED, "저장된 Refresh Token과 일치하지 않습니다."),
     EXPIRED_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "Refresh Token이 만료되었습니다."),
@@ -29,6 +30,7 @@ public enum ResponseCode {
 
     // 500 Internal Server Error
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버에서 오류가 발생했습니다."),
+    REDIS_SERIALIZATION_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "OnlineUserDto 직렬화에 실패했습니다."),
 
     // 200 OK
     USER_LOGIN_SUCCESS(HttpStatus.OK, "로그인에 성공했습니다."),
