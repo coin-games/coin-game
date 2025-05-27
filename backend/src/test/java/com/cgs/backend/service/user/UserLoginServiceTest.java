@@ -1,11 +1,11 @@
 package com.cgs.backend.service.user;
 
-import com.cgs.backend.dto.user.TokenResponse;
-import com.cgs.backend.dto.user.UserLoginRequest;
-import com.cgs.backend.entity.User;
-import com.cgs.backend.repository.UserRepository;
-import com.cgs.backend.security.JwtProvider;
-import com.cgs.backend.service.redis.TokenService;
+import com.cgs.backend.auth.dto.TokenResponse;
+import com.cgs.backend.user.dto.UserLoginRequest;
+import com.cgs.backend.user.entity.User;
+import com.cgs.backend.global.security.JwtProvider;
+import com.cgs.backend.auth.service.RefreshTokenService;
+import com.cgs.backend.user.service.UserLoginService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,7 +31,7 @@ class UserLoginServiceTest {
     private JwtProvider jwtProvider;
 
     @Mock
-    private TokenService tokenService;
+    private RefreshTokenService refreshTokenService;
 
     @InjectMocks
     private UserLoginService userLoginService;
@@ -64,7 +64,7 @@ class UserLoginServiceTest {
         assertEquals("accessToken", response.getAccessToken());
         assertEquals("refreshToken", response.getRefreshToken());
 
-        verify(tokenService).saveRefreshToken("refresh:" + user.getId(), "refreshToken", 3600000L);
+        verify(refreshTokenService).saveRefreshToken("refresh:" + user.getId(), "refreshToken", 3600000L);
         verify(userRepository).findByEmail(request.getEmail());
         verify(passwordEncoder).matches(request.getPassword(), user.getPassword());
         verify(jwtProvider).createAccessToken(user);

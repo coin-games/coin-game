@@ -1,9 +1,9 @@
 package com.cgs.backend.service.user;
 
-import com.cgs.backend.common.exception.UserException;
-import com.cgs.backend.dto.user.UserSignUpRequest;
-import com.cgs.backend.entity.User;
-import com.cgs.backend.repository.UserRepository;
+import com.cgs.backend.global.exception.UserException;
+import com.cgs.backend.user.dto.UserSignUpRequest;
+import com.cgs.backend.user.entity.User;
+import com.cgs.backend.user.service.UserSignUpService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
