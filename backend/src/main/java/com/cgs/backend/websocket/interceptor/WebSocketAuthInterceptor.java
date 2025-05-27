@@ -1,9 +1,9 @@
 package com.cgs.backend.websocket.interceptor;
 
-import com.cgs.backend.common.exception.WebSocketException;
-import com.cgs.backend.common.response.ResponseCode;
-import com.cgs.backend.security.JwtProvider;
-import com.cgs.backend.security.TokenValidationResult;
+import com.cgs.backend.global.exception.WebSocketException;
+import com.cgs.backend.global.response.ResponseCode;
+import com.cgs.backend.global.security.JwtProvider;
+import com.cgs.backend.global.security.TokenValidationResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;

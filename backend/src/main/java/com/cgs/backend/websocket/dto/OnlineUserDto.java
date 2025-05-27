@@ -1,6 +1,6 @@
 package com.cgs.backend.websocket.dto;
 
-import com.cgs.backend.common.enums.UserStatus;
+import com.cgs.backend.global.enums.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

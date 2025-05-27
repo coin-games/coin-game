@@ -1,12 +1,13 @@
 package com.cgs.backend.controller;
 
-import com.cgs.backend.common.exception.UserException;
-import com.cgs.backend.common.response.ResponseCode;
-import com.cgs.backend.dto.user.TokenResponse;
-import com.cgs.backend.dto.user.UserLoginRequest;
-import com.cgs.backend.dto.user.UserSignUpRequest;
-import com.cgs.backend.service.user.UserLoginService;
-import com.cgs.backend.service.user.UserSignUpService;
+import com.cgs.backend.global.exception.UserException;
+import com.cgs.backend.global.response.ResponseCode;
+import com.cgs.backend.user.controller.UserController;
+import com.cgs.backend.auth.dto.TokenResponse;
+import com.cgs.backend.user.dto.UserLoginRequest;
+import com.cgs.backend.user.dto.UserSignUpRequest;
+import com.cgs.backend.user.service.UserLoginService;
+import com.cgs.backend.user.service.UserSignUpService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

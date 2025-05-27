@@ -1,12 +1,12 @@
 package com.cgs.backend.websocket.service;
 
-import com.cgs.backend.common.enums.UserStatus;
-import com.cgs.backend.common.exception.UserException;
-import com.cgs.backend.common.response.ResponseCode;
-import com.cgs.backend.entity.User;
-import com.cgs.backend.entity.UserRecord;
-import com.cgs.backend.repository.UserRecordRepository;
-import com.cgs.backend.repository.UserRepository;
+import com.cgs.backend.global.enums.UserStatus;
+import com.cgs.backend.global.exception.UserException;
+import com.cgs.backend.global.response.ResponseCode;
+import com.cgs.backend.user.entity.User;
+import com.cgs.backend.user.entity.UserRecord;
+import com.cgs.backend.user.repository.UserRecordRepository;
+import com.cgs.backend.user.repository.UserRepository;
 import com.cgs.backend.websocket.dto.OnlineUserDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
