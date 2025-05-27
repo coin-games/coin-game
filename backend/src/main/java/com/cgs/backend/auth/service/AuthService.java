@@ -6,6 +6,8 @@ import com.cgs.backend.auth.dto.TokenReissueRequest;
 import com.cgs.backend.auth.dto.TokenResponse;
 import com.cgs.backend.global.security.JwtProvider;
 import com.cgs.backend.global.security.TokenValidationResult;
+import com.cgs.backend.user.entity.User;
+import com.cgs.backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ public class AuthService {
 
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
+    private final UserRepository userRepository;
 
     public TokenResponse reissue(TokenReissueRequest request) {
         //전달받은 refreshToken 검증
@@ -24,9 +27,12 @@ public class AuthService {
         String userId = jwtProvider.getUserId(request.getRefreshToken());
         validateStoredRefreshToken(userId, request.getRefreshToken());
 
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserException(ResponseCode.USER_NOT_FOUND));
+
         //검증이 완료되면 accessToken 재발급
         String newAccessToken = jwtProvider.createAccessToken(userId);
-        return new TokenResponse(newAccessToken, request.getRefreshToken());
+        return new TokenResponse(newAccessToken, request.getRefreshToken(), user.getEmail(), user.getUserRecord().getWins(), user.getUserRecord().getLosses());
     }
 
     private void validateStoredRefreshToken(String userId, String providedToken) {
