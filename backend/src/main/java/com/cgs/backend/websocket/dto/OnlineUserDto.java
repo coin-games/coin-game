@@ -3,9 +3,11 @@ package com.cgs.backend.websocket.dto;
 import com.cgs.backend.global.enums.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor
 @Getter
+@Setter
 public class OnlineUserDto {
     private String userId;
     private String nickname;
