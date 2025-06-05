@@ -8,6 +8,7 @@ import com.cgs.backend.user.entity.UserRecord;
 import com.cgs.backend.user.repository.UserRecordRepository;
 import com.cgs.backend.user.repository.UserRepository;
 import com.cgs.backend.websocket.dto.OnlineUserDto;
+import com.cgs.backend.websocket.util.WebSocketEndpoint;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -85,7 +86,7 @@ public class OnlineUserService {
 
     public void broadcastOnlineUsers() {
         List<OnlineUserDto> users = getAllOnlineUsers();
-        messagingTemplate.convertAndSend("/topic/online-users", users);
+        messagingTemplate.convertAndSend(WebSocketEndpoint.ONLINE_USERS, users);
     }
 
     public UserStatus getUserStatus(String userId) {
