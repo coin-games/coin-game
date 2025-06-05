@@ -1,4 +1,4 @@
-package com.cgs.backend.websocket.service;
+package com.cgs.backend.websocket.service.online;
 
 import com.cgs.backend.global.enums.UserStatus;
 import com.cgs.backend.global.exception.UserException;
@@ -7,7 +7,7 @@ import com.cgs.backend.user.entity.User;
 import com.cgs.backend.user.entity.UserRecord;
 import com.cgs.backend.user.repository.UserRecordRepository;
 import com.cgs.backend.user.repository.UserRepository;
-import com.cgs.backend.websocket.dto.OnlineUserDto;
+import com.cgs.backend.websocket.dto.online.OnlineUserDto;
 import com.cgs.backend.websocket.util.WebSocketEndpoint;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

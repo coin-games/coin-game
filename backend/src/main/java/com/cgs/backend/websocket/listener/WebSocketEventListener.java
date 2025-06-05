@@ -1,7 +1,6 @@
 package com.cgs.backend.websocket.listener;
 
-import com.cgs.backend.websocket.dto.OnlineUserDto;
-import com.cgs.backend.websocket.service.OnlineUserService;
+import com.cgs.backend.websocket.service.online.OnlineUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -11,8 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 import org.springframework.web.socket.messaging.SessionSubscribeEvent;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor

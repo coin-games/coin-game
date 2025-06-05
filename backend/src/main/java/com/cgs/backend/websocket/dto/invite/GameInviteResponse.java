@@ -1,4 +1,4 @@
-package com.cgs.backend.websocket.dto;
+package com.cgs.backend.websocket.dto.invite;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

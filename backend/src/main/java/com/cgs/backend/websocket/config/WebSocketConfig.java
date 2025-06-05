@@ -1,4 +1,4 @@
-package com.cgs.backend.global.config;
+package com.cgs.backend.websocket.config;
 
 import com.cgs.backend.websocket.interceptor.WebSocketAuthInterceptor;
 import lombok.RequiredArgsConstructor;

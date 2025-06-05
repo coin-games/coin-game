@@ -1,4 +1,4 @@
-package com.cgs.backend.websocket.dto;
+package com.cgs.backend.websocket.dto.online;
 
 import com.cgs.backend.global.enums.UserStatus;
 import lombok.AllArgsConstructor;

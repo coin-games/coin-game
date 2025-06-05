@@ -1,8 +1,8 @@
 package com.cgs.backend.websocket.controller;
 
-import com.cgs.backend.websocket.dto.GameInviteRequest;
-import com.cgs.backend.websocket.dto.GameInviteResponse;
-import com.cgs.backend.websocket.service.GameInviteService;
+import com.cgs.backend.websocket.dto.invite.GameInviteRequest;
+import com.cgs.backend.websocket.dto.invite.GameInviteResponse;
+import com.cgs.backend.websocket.service.invite.GameInviteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
