@@ -1,4 +1,4 @@
-package com.cgs.backend.websocket.service;
+package com.cgs.backend.websocket.service.online;
 
 import com.cgs.backend.global.enums.UserStatus;
 import com.cgs.backend.global.exception.UserException;
@@ -7,11 +7,13 @@ import com.cgs.backend.user.entity.User;
 import com.cgs.backend.user.entity.UserRecord;
 import com.cgs.backend.user.repository.UserRecordRepository;
 import com.cgs.backend.user.repository.UserRepository;
-import com.cgs.backend.websocket.dto.OnlineUserDto;
+import com.cgs.backend.websocket.dto.online.OnlineUserDto;
+import com.cgs.backend.websocket.util.WebSocketEndpoint;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -28,6 +30,7 @@ public class OnlineUserService {
     private final UserRecordRepository userRecordRepository;
     private final StringRedisTemplate redisTemplate;
     private final ObjectMapper objectMapper;
+    private final SimpMessagingTemplate messagingTemplate;
 
     public void saveOnlineUser(String userId) {
         User user = userRepository.findById(userId)
@@ -62,5 +65,45 @@ public class OnlineUserService {
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
+    }
+
+    public void updateOnlineUserStatus(String userId, UserStatus status) {
+        String key = "online_user:" + userId;
+        String json = redisTemplate.opsForValue().get(key);
+
+        if (json == null) throw new UserException(ResponseCode.USER_NOT_FOUND);
+
+        try {
+            OnlineUserDto user = objectMapper.readValue(json, OnlineUserDto.class);
+            user.setStatus(status);
+
+            String updatedJson = objectMapper.writeValueAsString(user);
+            redisTemplate.opsForValue().set(key, updatedJson);
+        } catch (JsonProcessingException e) {
+            throw new UserException(ResponseCode.REDIS_SERIALIZATION_ERROR);
+        }
+    }
+
+    public void broadcastOnlineUsers() {
+        List<OnlineUserDto> users = getAllOnlineUsers();
+        messagingTemplate.convertAndSend(WebSocketEndpoint.ONLINE_USERS, users);
+    }
+
+    public UserStatus getUserStatus(String userId) {
+        OnlineUserDto user = getOnlineUserById(userId);
+        if (user == null) throw new UserException(ResponseCode.USER_NOT_FOUND);
+        return user.getStatus();
+    }
+
+    private OnlineUserDto getOnlineUserById(String userId) {
+        String key = "online_user:" + userId;
+        String json = redisTemplate.opsForValue().get(key);
+
+        if (json == null) return null;
+        try {
+            return objectMapper.readValue(json, OnlineUserDto.class);
+        } catch (JsonProcessingException e) {
+            throw new UserException(ResponseCode.REDIS_SERIALIZATION_ERROR);
+        }
     }
 }

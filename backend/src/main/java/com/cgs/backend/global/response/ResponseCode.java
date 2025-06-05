@@ -25,6 +25,9 @@ public enum ResponseCode {
     INVALID_ACCESS_TOKEN_SIGNATURE(HttpStatus.UNAUTHORIZED, "Access Token의 서명이 올바르지 않습니다."),
     MALFORMED_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED, "Access Token 형식이 잘못되었습니다."),
 
+    // 403 Forbidden
+    INVALID_USER_ID(HttpStatus.FORBIDDEN, "토큰의 사용자 정보와 요청 정보가 일치하지 않습니다."),
+
     // 409 Conflict
     USER_EMAIL_ALREADY_EXIST(HttpStatus.CONFLICT, "이미 존재하는 이메일입니다."),
 
