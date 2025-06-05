@@ -3,6 +3,7 @@ package com.cgs.backend.websocket.interceptor;
 import com.cgs.backend.global.exception.WebSocketException;
 import com.cgs.backend.global.response.ResponseCode;
 import com.cgs.backend.global.security.JwtProvider;
+import com.cgs.backend.global.security.StompPrincipal;
 import com.cgs.backend.global.security.TokenValidationResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.Message;
@@ -43,7 +44,7 @@ public class WebSocketAuthInterceptor implements ChannelInterceptor {
             }
 
             String userId = jwtProvider.getUserId(token);
-            accessor.setUser(() -> userId);
+            accessor.setUser(new StompPrincipal(userId));
             accessor.getSessionAttributes().put("userId", userId);
         }
         return message;

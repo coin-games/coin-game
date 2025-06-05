@@ -29,7 +29,7 @@ public class WebSocketEventListener {
 
         if (userId != null) {
             onlineUserService.saveOnlineUser(userId);
-            broadcastOnlineUsers();
+            onlineUserService.broadcastOnlineUsers();
         }
     }
 
@@ -40,7 +40,7 @@ public class WebSocketEventListener {
         String userId = (String) accessor.getSessionAttributes().get("userId");
 
         if ("/topic/online-users".equals(destination)) {
-            broadcastOnlineUsers();
+            onlineUserService.broadcastOnlineUsers();
         }
     }
 
@@ -51,12 +51,7 @@ public class WebSocketEventListener {
 
         if (userId != null) {
             redisTemplate.delete("online_user:" + userId);
-            broadcastOnlineUsers();
+            onlineUserService.broadcastOnlineUsers();
         }
-    }
-
-    private void broadcastOnlineUsers() {
-        List<OnlineUserDto> users = onlineUserService.getAllOnlineUsers();
-        messagingTemplate.convertAndSend("/topic/online-users", users);
     }
 }

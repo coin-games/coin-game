@@ -9,7 +9,7 @@ public class TokenResponse {
     private String accessToken;
     private String refreshToken;
     private String userId;
-    private String email;
+    private String nickname;
     private int wins;
     private int losses;
 }

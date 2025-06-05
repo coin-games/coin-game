@@ -32,7 +32,7 @@ public class AuthService {
 
         //검증이 완료되면 accessToken 재발급
         String newAccessToken = jwtProvider.createAccessToken(userId);
-        return new TokenResponse(newAccessToken, request.getRefreshToken(), user.getId(), user.getEmail(), user.getUserRecord().getWins(), user.getUserRecord().getLosses());
+        return new TokenResponse(newAccessToken, request.getRefreshToken(), user.getId(), user.getNickname(), user.getUserRecord().getWins(), user.getUserRecord().getLosses());
     }
 
     private void validateStoredRefreshToken(String userId, String providedToken) {
