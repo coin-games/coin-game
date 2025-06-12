@@ -1,10 +1,11 @@
 package com.cgs.backend.websocket.listener;
 
+import com.cgs.backend.websocket.constants.RedisKeys;
+import com.cgs.backend.websocket.repository.RedisRepository;
 import com.cgs.backend.websocket.service.manager.OnlineUserManager;
+import com.cgs.backend.websocket.util.WebSocketEndpoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
@@ -16,7 +17,7 @@ import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 public class WebSocketEventListener {
 
     private final OnlineUserManager onlineUserManager;
-    private final StringRedisTemplate redisTemplate;
+    private final RedisRepository redisRepository;
 
     @EventListener
     public void handleConnect(SessionConnectEvent event) {
@@ -33,9 +34,8 @@ public class WebSocketEventListener {
     public void handleSubscribe(SessionSubscribeEvent event) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
         String destination = accessor.getDestination();
-        String userId = (String) accessor.getSessionAttributes().get("userId");
 
-        if ("/topic/online-users".equals(destination)) {
+        if (WebSocketEndpoint.onlineUsers().equals(destination)) {
             onlineUserManager.broadcastOnlineUsers();
         }
     }
@@ -46,7 +46,7 @@ public class WebSocketEventListener {
         String userId = (String) accessor.getSessionAttributes().get("userId");
 
         if (userId != null) {
-            redisTemplate.delete("online_user:" + userId);
+            redisRepository.deleteValue(RedisKeys.ONLINE_USER_PREFIX + userId);
             onlineUserManager.broadcastOnlineUsers();
         }
     }

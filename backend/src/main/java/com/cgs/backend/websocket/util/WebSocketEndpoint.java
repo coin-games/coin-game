@@ -4,7 +4,10 @@ public class WebSocketEndpoint {
     public static final String QUEUE_PREFIX = "/queue/";
     public static final String TOPIC_PREFIX = "/topic/";
 
-    public static final String ONLINE_USERS = TOPIC_PREFIX + "online-users";
+    //온라인 유저 목록
+    public static String onlineUsers() {
+        return TOPIC_PREFIX + "online-users";
+    }
 
     //초대 관련
     public static String userInvite(String userId) {

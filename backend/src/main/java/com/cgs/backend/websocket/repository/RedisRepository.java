@@ -13,4 +13,12 @@ public interface RedisRepository {
     //hash
     void putToHash(String key, String field, String value);
     String getFromHash(String key, String field);
+
+    //value (map의)
+    void setValue(String key, String value);
+    String getValue(String key);
+    void deleteValue(String key);
+
+    //key
+    Set<String> getKeysByPattern(String pattern);
 }

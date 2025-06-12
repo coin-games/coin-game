@@ -41,4 +41,24 @@ public class RedisRepositoryImpl implements RedisRepository {
     public String getFromHash(String key, String field) {
         return (String) redisTemplate.opsForHash().get(key, field);
     }
+
+    @Override
+    public void setValue(String key, String value) {
+        redisTemplate.opsForValue().set(key, value);
+    }
+
+    @Override
+    public String getValue(String key) {
+        return redisTemplate.opsForValue().get(key);
+    }
+
+    @Override
+    public void deleteValue(String key) {
+        redisTemplate.delete(key);
+    }
+
+    @Override
+    public Set<String> getKeysByPattern(String pattern) {
+        return redisTemplate.keys(pattern);
+    }
 }
