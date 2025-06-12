@@ -7,6 +7,7 @@ import com.cgs.backend.user.entity.User;
 import com.cgs.backend.user.entity.UserRecord;
 import com.cgs.backend.user.repository.UserRecordRepository;
 import com.cgs.backend.user.repository.UserRepository;
+import com.cgs.backend.websocket.constants.RedisKeys;
 import com.cgs.backend.websocket.dto.online.OnlineUserDto;
 import com.cgs.backend.websocket.util.WebSocketEndpoint;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -96,7 +97,7 @@ public class OnlineUserService {
     }
 
     private OnlineUserDto getOnlineUserById(String userId) {
-        String key = "online_user:" + userId;
+        String key = RedisKeys.ONLINE_USER_PREFIX + userId;
         String json = redisTemplate.opsForValue().get(key);
 
         if (json == null) return null;

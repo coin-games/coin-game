@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.Set;
+
 @Repository
 @RequiredArgsConstructor
 public class RedisRepositoryImpl implements RedisRepository {
@@ -23,5 +25,20 @@ public class RedisRepositoryImpl implements RedisRepository {
     @Override
     public void deleteFromSet(String key) {
         redisTemplate.delete(key);
+    }
+
+    @Override
+    public Set<String> getAllFromSet(String key) {
+        return redisTemplate.opsForSet().members(key);
+    }
+
+    @Override
+    public void putToHash(String key, String field, String value) {
+        redisTemplate.opsForHash().put(key, field, value);
+    }
+
+    @Override
+    public String getFromHash(String key, String field) {
+        return (String) redisTemplate.opsForHash().get(key, field);
     }
 }

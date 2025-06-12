@@ -10,24 +10,19 @@ public class WebSocketEndpoint {
     public static String userInvite(String userId) {
         return QUEUE_PREFIX + userId + "/invite";
     }
-
     public static String userInviteResponse(String userId) {
-        return QUEUE_PREFIX + userId + "/invite-response";
-    }
-
-    public static String userInviteFail(String userId) {
-        return QUEUE_PREFIX + userId + "/invite-fail";
+        return QUEUE_PREFIX + userId + "/invite/response";
     }
 
     //게임 관련
     public static String gameStart(String roomId) {
         return TOPIC_PREFIX + "game/" + roomId + "/start";
     }
-    public static String gameInit(String roomId) {
-        return TOPIC_PREFIX + "game/" + roomId + "/init";
+    public static String gameInit(String userId) {
+        return QUEUE_PREFIX + userId + "/game/init";
     }
-    public static String gameUpdate(String roomId) {
-        return TOPIC_PREFIX + "game/" + roomId + "/update";
+    public static String gameUpdate(String userId) {
+        return QUEUE_PREFIX + userId + "/game/update";
     }
     public static String gameEnd(String roomId) {
         return TOPIC_PREFIX + "game/" + roomId + "/end";
