@@ -4,8 +4,8 @@ import com.cgs.backend.global.enums.UserStatus;
 import com.cgs.backend.websocket.constants.RedisKeys;
 import com.cgs.backend.websocket.dto.invite.GameInviteResponseMessage;
 import com.cgs.backend.websocket.repository.RedisRepository;
-import com.cgs.backend.websocket.service.online.OnlineUserService;
-import com.cgs.backend.websocket.service.room.GameRoomService;
+import com.cgs.backend.websocket.service.manager.OnlineUserManager;
+import com.cgs.backend.websocket.service.manager.GameRoomManager;
 import com.cgs.backend.websocket.util.WebSocketEndpoint;
 import com.cgs.backend.websocket.util.WebSocketUtils;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +18,8 @@ import java.util.Set;
 public class InviteResponseService {
 
     private final RedisRepository redisRepository;
-    private final OnlineUserService onlineUserService;
-    private final GameRoomService gameRoomService;
+    private final OnlineUserManager onlineUserManager;
+    private final GameRoomManager gameRoomManager;
     private final WebSocketUtils webSocketUtils;
 
     public void handleInviteResponse(GameInviteResponseMessage message) {
@@ -27,9 +27,9 @@ public class InviteResponseService {
 
         if (message.isAccepted()) {
             // 두 유저의 상태 게임중으로 변경 및 온라인 유저 목록 메시지 발행
-            onlineUserService.updateOnlineUserStatus(message.getToUserId(), UserStatus.IN_GAME);
-            onlineUserService.updateOnlineUserStatus(message.getFromUserId(), UserStatus.IN_GAME);
-            onlineUserService.broadcastOnlineUsers();
+            onlineUserManager.updateOnlineUserStatus(message.getToUserId(), UserStatus.IN_GAME);
+            onlineUserManager.updateOnlineUserStatus(message.getFromUserId(), UserStatus.IN_GAME);
+            onlineUserManager.broadcastOnlineUsers();
 
             // 특정 사용자가 초대를 수락하면 특정 사용자에게 초대를 보낸 다른 사용자들에게 거절 메시지 발행
             Set<String> fromUserIds = redisRepository.getAllFromSet(key);
@@ -45,7 +45,7 @@ public class InviteResponseService {
                 }
             }
 
-            String roomId = gameRoomService.createRoom(message.getFromUserId(), message.getToUserId());
+            String roomId = gameRoomManager.createRoom(message.getFromUserId(), message.getToUserId());
 
             //초대자에게 수락 메시지 발행 (roomId 포함)
             webSocketUtils.publishMessage(

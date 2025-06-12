@@ -1,4 +1,4 @@
-package com.cgs.backend.websocket.service.room;
+package com.cgs.backend.websocket.service.manager;
 
 import com.cgs.backend.websocket.constants.RedisKeys;
 import com.cgs.backend.websocket.repository.RedisRepository;
@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class GameRoomService {
+public class GameRoomManager {
 
     private final RedisRepository redisRepository;
 

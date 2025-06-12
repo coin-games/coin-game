@@ -1,4 +1,4 @@
-package com.cgs.backend.websocket.service.online;
+package com.cgs.backend.websocket.service.manager;
 
 import com.cgs.backend.global.enums.UserStatus;
 import com.cgs.backend.global.exception.UserException;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class OnlineUserService {
+public class OnlineUserManager {
 
     private final UserRepository userRepository;
     private final UserRecordRepository userRecordRepository;

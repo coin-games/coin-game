@@ -1,6 +1,6 @@
 package com.cgs.backend.websocket.listener;
 
-import com.cgs.backend.websocket.service.online.OnlineUserService;
+import com.cgs.backend.websocket.service.manager.OnlineUserManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -15,9 +15,8 @@ import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 @RequiredArgsConstructor
 public class WebSocketEventListener {
 
-    private final OnlineUserService onlineUserService;
+    private final OnlineUserManager onlineUserManager;
     private final StringRedisTemplate redisTemplate;
-    private final SimpMessageSendingOperations messagingTemplate;
 
     @EventListener
     public void handleConnect(SessionConnectEvent event) {
@@ -25,8 +24,8 @@ public class WebSocketEventListener {
         String userId = (String) accessor.getSessionAttributes().get("userId");
 
         if (userId != null) {
-            onlineUserService.saveOnlineUser(userId);
-            onlineUserService.broadcastOnlineUsers();
+            onlineUserManager.saveOnlineUser(userId);
+            onlineUserManager.broadcastOnlineUsers();
         }
     }
 
@@ -37,7 +36,7 @@ public class WebSocketEventListener {
         String userId = (String) accessor.getSessionAttributes().get("userId");
 
         if ("/topic/online-users".equals(destination)) {
-            onlineUserService.broadcastOnlineUsers();
+            onlineUserManager.broadcastOnlineUsers();
         }
     }
 
@@ -48,7 +47,7 @@ public class WebSocketEventListener {
 
         if (userId != null) {
             redisTemplate.delete("online_user:" + userId);
-            onlineUserService.broadcastOnlineUsers();
+            onlineUserManager.broadcastOnlineUsers();
         }
     }
 }
