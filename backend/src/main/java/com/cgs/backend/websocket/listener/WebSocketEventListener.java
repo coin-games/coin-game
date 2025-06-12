@@ -26,7 +26,6 @@ public class WebSocketEventListener {
 
         if (userId != null) {
             onlineUserManager.saveOnlineUser(userId);
-            onlineUserManager.broadcastOnlineUsers();
         }
     }
 
