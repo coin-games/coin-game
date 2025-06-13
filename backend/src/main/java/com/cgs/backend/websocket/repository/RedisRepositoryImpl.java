@@ -43,6 +43,11 @@ public class RedisRepositoryImpl implements RedisRepository {
     }
 
     @Override
+    public Long incrementHashValue(String key, String field, long delta) {
+        return redisTemplate.opsForHash().increment(key, field, delta);
+    }
+
+    @Override
     public void setValue(String key, String value) {
         redisTemplate.opsForValue().set(key, value);
     }

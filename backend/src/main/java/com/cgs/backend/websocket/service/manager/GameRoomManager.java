@@ -34,4 +34,9 @@ public class GameRoomManager {
         String score = redisRepository.getFromHash(key, "score");
         return score != null ? Integer.parseInt(score) : 0;
     }
+
+    public void incrementScore(String roomId, String userId, int delta) {
+        String key = RedisKeys.GAME_SCORE_PREFIX + roomId + ":" + userId;
+        redisRepository.incrementHashValue(key, "score", delta);
+    }
 }

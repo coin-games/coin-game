@@ -13,6 +13,7 @@ public interface RedisRepository {
     //hash
     void putToHash(String key, String field, String value);
     String getFromHash(String key, String field);
+    Long incrementHashValue(String key, String field, long delta);
 
     //value (map의)
     void setValue(String key, String value);
