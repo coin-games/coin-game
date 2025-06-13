@@ -17,6 +17,9 @@ public class GameRoomManager {
         String roomId = UUID.randomUUID().toString().substring(0, 16);
         redisRepository.putToHash(RedisKeys.GAME_ROOM_PREFIX + roomId, "playerA", userA);
         redisRepository.putToHash(RedisKeys.GAME_ROOM_PREFIX + roomId, "playerB", userB);
+
+        redisRepository.putToHash(RedisKeys.GAME_SCORE_PREFIX + roomId + ":" + userA, "score", "0");
+        redisRepository.putToHash(RedisKeys.GAME_SCORE_PREFIX + roomId + ":" + userB, "score", "0");
         return roomId;
     }
 
@@ -24,5 +27,11 @@ public class GameRoomManager {
         String playerA = redisRepository.getFromHash(RedisKeys.GAME_ROOM_PREFIX + roomId, "playerA");
         String playerB = redisRepository.getFromHash(RedisKeys.GAME_ROOM_PREFIX + roomId, "playerB");
         return userId.equals(playerA) ? playerB : playerA;
+    }
+
+    public int getScore(String roomId, String userId) {
+        String key = RedisKeys.GAME_SCORE_PREFIX + roomId + ":" + userId;
+        String score = redisRepository.getFromHash(key, "score");
+        return score != null ? Integer.parseInt(score) : 0;
     }
 }
