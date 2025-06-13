@@ -38,6 +38,7 @@ public enum ResponseCode {
     // 200 OK
     USER_LOGIN_SUCCESS(HttpStatus.OK, "로그인에 성공했습니다."),
     ACCESS_TOKEN_REISSUE_SUCCESS(HttpStatus.OK, "Access Token이 재발급되었습니다."),
+    RANK_FETCH_SUCCESS(HttpStatus.OK, "랭킹 조회에 성공했습니다."),
 
     // 201 Created
     USER_CREATE_SUCCESS(HttpStatus.CREATED, "회원가입에 성공했습니다.");

@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GameEndMessage {
+    private String SelfNickname;
+    private String OpponentNickname;
     private String roomId;
     private String userId;
 }

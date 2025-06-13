@@ -1,10 +1,11 @@
 package com.cgs.backend.websocket.service.game;
 
 import com.cgs.backend.global.enums.UserStatus;
+import com.cgs.backend.user.service.ScoreSaveService;
+import com.cgs.backend.user.service.UserRecordService;
 import com.cgs.backend.websocket.dto.game.GameEndMessage;
 import com.cgs.backend.websocket.dto.game.GameEndResponseMessage;
 import com.cgs.backend.websocket.dto.game.GameResult;
-import com.cgs.backend.websocket.repository.RedisRepository;
 import com.cgs.backend.websocket.service.manager.GameRoomManager;
 import com.cgs.backend.websocket.service.manager.OnlineUserManager;
 import com.cgs.backend.websocket.util.WebSocketEndpoint;
@@ -19,6 +20,8 @@ public class GameEndService {
     private final WebSocketUtils webSocketUtils;
     private final GameRoomManager gameRoomManager;
     private final OnlineUserManager onlineUserManager;
+    private final ScoreSaveService scoreSaveService;
+    private final UserRecordService userRecordService;
 
     public void endGame(GameEndMessage message) {
         String opponentId = gameRoomManager.getOpponent(message.getRoomId(), message.getUserId());
@@ -48,11 +51,19 @@ public class GameEndService {
         //redis 정리 - 사용자 상태 waiting으로 변경
         onlineUserManager.updateOnlineUserStatus(message.getUserId(), UserStatus.WAITING);
         onlineUserManager.updateOnlineUserStatus(opponentId, UserStatus.WAITING);
-        onlineUserManager.broadcastOnlineUsers();
         //redis 정리 - game_score:, game_room: 삭제
         gameRoomManager.clearRoom(message.getRoomId());
+        //redis 정리 - online_user: 승패 변경
+        onlineUserManager.incrementUserResult(message.getUserId(), selfResult);
+        onlineUserManager.incrementUserResult(opponentId, opponentResult);
 
-        //게임 기록 DB 저장 or 유저 상태 update(redis 승패/)
+        onlineUserManager.broadcastOnlineUsers();
 
+        //게임 점수 DB 저장 or 유저 상태 update(redis 승패/)
+        scoreSaveService.saveUserScore(message.getSelfNickname(), selfScore);
+        scoreSaveService.saveUserScore(message.getOpponentNickname(), opponentScore);
+        //게임 승패 DB +1
+        userRecordService.applyGameResult(message.getUserId(), selfResult);
+        userRecordService.applyGameResult(opponentId, opponentResult);
     }
 }

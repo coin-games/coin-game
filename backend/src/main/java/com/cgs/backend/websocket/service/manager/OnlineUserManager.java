@@ -8,6 +8,7 @@ import com.cgs.backend.user.entity.UserRecord;
 import com.cgs.backend.user.repository.UserRecordRepository;
 import com.cgs.backend.user.repository.UserRepository;
 import com.cgs.backend.websocket.constants.RedisKeys;
+import com.cgs.backend.websocket.dto.game.GameResult;
 import com.cgs.backend.websocket.dto.online.OnlineUserMessage;
 import com.cgs.backend.websocket.repository.RedisRepository;
 import com.cgs.backend.websocket.util.WebSocketEndpoint;
@@ -40,7 +41,7 @@ public class OnlineUserManager {
         UserRecord record = userRecordRepository.findById(userId)
                 .orElseThrow(() -> new UserException(ResponseCode.RECORD_NOT_FOUND));
 
-        OnlineUserMessage dto = new OnlineUserMessage(user.getId(), user.getNickname(), UserStatus.WAITING, record.getWins(), record.getLosses());
+        OnlineUserMessage dto = new OnlineUserMessage(user.getUserId(), user.getNickname(), UserStatus.WAITING, record.getWins(), record.getLosses());
         try {
             String json = objectMapper.writeValueAsString(dto);
             redisRepository.setValue(RedisKeys.ONLINE_USER_PREFIX + userId, json);
@@ -102,6 +103,27 @@ public class OnlineUserManager {
 
         try {
             return objectMapper.readValue(json, OnlineUserMessage.class);
+        } catch (JsonProcessingException e) {
+            throw new UserException(ResponseCode.REDIS_SERIALIZATION_ERROR);
+        }
+    }
+
+    //redis 정리 - online_user: 승패 증가
+    public void incrementUserResult(String userId, GameResult gameResult) {
+        String key = RedisKeys.ONLINE_USER_PREFIX + userId;
+        String json = redisRepository.getValue(key);
+
+        if (json == null) throw new UserException(ResponseCode.USER_NOT_FOUND);
+
+        try {
+            OnlineUserMessage user = objectMapper.readValue(json, OnlineUserMessage.class);
+
+            if (gameResult == GameResult.WIN) user.setWins(user.getWins() + 1);
+            else if (gameResult == GameResult.LOSE) user.setLosses(user.getLosses() + 1);
+            else if (gameResult == GameResult.DRAW) return;
+
+            String updatedJson = objectMapper.writeValueAsString(user);
+            redisRepository.setValue(key, updatedJson);
         } catch (JsonProcessingException e) {
             throw new UserException(ResponseCode.REDIS_SERIALIZATION_ERROR);
         }
