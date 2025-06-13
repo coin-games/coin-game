@@ -96,7 +96,7 @@ public class OnlineUserManager {
         return user.getStatus();
     }
 
-    private OnlineUserMessage getOnlineUserById(String userId) {
+    public OnlineUserMessage getOnlineUserById(String userId) {
         String key = RedisKeys.ONLINE_USER_PREFIX + userId;
         String json = redisRepository.getValue(key);
         if (json == null) return null;

@@ -12,4 +12,5 @@ public class GameEndMessage {
     private String OpponentNickname;
     private String roomId;
     private String userId;
+    private boolean disconnected;
 }

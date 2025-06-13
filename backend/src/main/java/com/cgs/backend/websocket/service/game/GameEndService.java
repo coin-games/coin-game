@@ -33,14 +33,21 @@ public class GameEndService {
         GameResult selfResult;
         GameResult opponentResult;
 
-        if (selfScore > opponentScore) {
-            selfResult = GameResult.WIN;
-            opponentResult = GameResult.LOSE;
-        } else if (selfScore < opponentScore) {
+        if (message.isDisconnected()) {
+            //강종한 사람은 패배
             selfResult = GameResult.LOSE;
             opponentResult = GameResult.WIN;
         } else {
-            selfResult = opponentResult = GameResult.DRAW;
+            //정상 종료시 점수 비교
+            if (selfScore > opponentScore) {
+                selfResult = GameResult.WIN;
+                opponentResult = GameResult.LOSE;
+            } else if (selfScore < opponentScore) {
+                selfResult = GameResult.LOSE;
+                opponentResult = GameResult.WIN;
+            } else {
+                selfResult = opponentResult = GameResult.DRAW;
+            }
         }
 
         //나에게 종료 메시지 발행
@@ -56,6 +63,9 @@ public class GameEndService {
         //redis 정리 - online_user: 승패 변경
         onlineUserManager.incrementUserResult(message.getUserId(), selfResult);
         onlineUserManager.incrementUserResult(opponentId, opponentResult);
+        //redis 정리 - user_room:{userId} 삭제
+        gameRoomManager.clearUserRoom(opponentId);
+        gameRoomManager.clearUserRoom(message.getUserId());
 
         onlineUserManager.broadcastOnlineUsers();
 
