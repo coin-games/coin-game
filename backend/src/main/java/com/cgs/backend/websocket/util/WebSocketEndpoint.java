@@ -30,7 +30,7 @@ public class WebSocketEndpoint {
     public static String gameScore(String userId) {  //상대방 정보
         return QUEUE_PREFIX + userId + "/game/score";
     }
-    public static String gameEnd(String roomId) {
-        return TOPIC_PREFIX + "game/" + roomId + "/end";
+    public static String gameEnd(String userId) {
+        return QUEUE_PREFIX + userId + "/game/end";
     }
 }

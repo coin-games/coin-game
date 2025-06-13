@@ -39,4 +39,13 @@ public class GameRoomManager {
         String key = RedisKeys.GAME_SCORE_PREFIX + roomId + ":" + userId;
         redisRepository.incrementHashValue(key, "score", delta);
     }
+
+    public void clearRoom(String roomId) {
+        String playerA = redisRepository.getFromHash(RedisKeys.GAME_ROOM_PREFIX + roomId, "playerA");
+        String playerB = redisRepository.getFromHash(RedisKeys.GAME_ROOM_PREFIX + roomId, "playerB");
+
+        redisRepository.deleteValue(RedisKeys.GAME_ROOM_PREFIX + roomId);
+        redisRepository.deleteValue(RedisKeys.GAME_SCORE_PREFIX + roomId + ":" + playerA);
+        redisRepository.deleteValue(RedisKeys.GAME_SCORE_PREFIX + roomId + ":" + playerB);
+    }
 }

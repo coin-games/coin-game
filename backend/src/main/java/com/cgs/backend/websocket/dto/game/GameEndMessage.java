@@ -9,8 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class GameEndMessage {
     private String roomId;
-    private String winnerUserId;
-    private String loserUserId;
-    private int winnerScore;
-    private int loserScore;
+    private String userId;
 }
