@@ -8,7 +8,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class OnlineUserDto {
+public class OnlineUserMessage {
     private String userId;
     private String nickname;
     private UserStatus status;

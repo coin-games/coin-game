@@ -16,7 +16,7 @@ import java.util.UUID;
 public class User {
 
     @Id
-    private String id;
+    private String userId;
     private String nickname;
     private String email;
     private String password;
@@ -28,7 +28,7 @@ public class User {
 
     @Builder
     public User(String nickname, String email, String password) {
-        this.id = "USER_" + UUID.randomUUID().toString().substring(0, 16);
+        this.userId = "USER_" + UUID.randomUUID().toString().substring(0, 16);
         this.nickname = nickname;
         this.email = email;
         this.password = password;

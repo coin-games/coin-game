@@ -23,4 +23,12 @@ public class UserRecord {
         this.wins = 0;
         this.losses = 0;
     }
+
+    public void addWin() {
+        this.wins += 1;
+    }
+
+    public void addLoss() {
+        this.losses += 1;
+    }
 }

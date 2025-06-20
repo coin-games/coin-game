@@ -30,8 +30,8 @@ public class UserLoginService {
         String accessToken = jwtProvider.createAccessToken(user);
         String refreshToken = jwtProvider.createRefreshToken(user);
 
-        saveRefreshToken(user.getId(), refreshToken);
-        return new TokenResponse(accessToken, refreshToken, user.getId(), user.getNickname(), user.getUserRecord().getWins(), user.getUserRecord().getLosses());
+        saveRefreshToken(user.getUserId(), refreshToken);
+        return new TokenResponse(accessToken, refreshToken, user.getUserId(), user.getNickname(), user.getUserRecord().getWins(), user.getUserRecord().getLosses());
     }
 
     private void saveRefreshToken(String userId, String refreshToken) {

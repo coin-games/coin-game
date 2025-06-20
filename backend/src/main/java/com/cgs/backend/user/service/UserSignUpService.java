@@ -34,7 +34,7 @@ public class UserSignUpService {
 
         // 전적 0승 0패로 초기화
         UserRecord userRecord = UserRecord.builder()
-                .userId(user.getId())
+                .userId(user.getUserId())
                 .build();
 
         userRecordRepository.save(userRecord);

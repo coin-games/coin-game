@@ -34,7 +34,7 @@ public class JwtProvider {
     }
 
     public String createAccessToken(User user) {
-        return createToken(user.getId(), accessTokenExpiration);
+        return createToken(user.getUserId(), accessTokenExpiration);
     }
 
     public String createAccessToken(String userId) {
@@ -42,7 +42,7 @@ public class JwtProvider {
     }
 
     public String createRefreshToken(User user) {
-        return createToken(user.getId(), refreshTokenExpiration);
+        return createToken(user.getUserId(), refreshTokenExpiration);
     }
 
     //Jwt 생성
